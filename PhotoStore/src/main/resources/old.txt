@@ -1,0 +1,6 @@
+
+<!--                            <li><a th:each="c : ${T(softuni.photostore.model.entity.enums.CameraTypeEnum).values()}"-->
+<!--                                   class="dropdown-item"-->
+<!--                                   th:href="*{c.getHref()}"-->
+<!--                                   th:text="*{'Обективи за ' + c.getTitle()}">Action</a></li>-->
+                            <!--                           th:text="Обективи за ${c.getTitle()}">Action</a></li>-->
