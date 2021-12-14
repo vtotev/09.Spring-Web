@@ -1,6 +1,7 @@
 package softuni.photostore.model.entity.lenses;
 
 import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
@@ -9,10 +10,9 @@ import softuni.photostore.model.entity.enums.LensTypeEnum;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "camera_models")
+@Table(name = "lens_models")
 public class LensModel extends BaseEntity {
 
     @ManyToOne
@@ -49,8 +49,8 @@ public class LensModel extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany
-    private List<LensPicture> pictures;
+    @OneToOne
+    private PictureEntity pictures;
 
     public LensModel() {
     }
@@ -145,11 +145,11 @@ public class LensModel extends BaseEntity {
         return this;
     }
 
-    public List<LensPicture> getPictures() {
+    public PictureEntity getPictures() {
         return pictures;
     }
 
-    public LensModel setPictures(List<LensPicture> pictures) {
+    public LensModel setPictures(PictureEntity pictures) {
         this.pictures = pictures;
         return this;
     }

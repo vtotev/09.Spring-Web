@@ -3,14 +3,14 @@ package softuni.photostore.web;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import softuni.photostore.service.BrandsService;
+import softuni.photostore.service.CameraBrandsService;
 
 @ControllerAdvice
 public class BrandsController {
 
-    private final BrandsService brandsService;
+    private final CameraBrandsService brandsService;
 
-    public BrandsController(BrandsService brandsService) {
+    public BrandsController(CameraBrandsService brandsService) {
         this.brandsService = brandsService;
     }
 

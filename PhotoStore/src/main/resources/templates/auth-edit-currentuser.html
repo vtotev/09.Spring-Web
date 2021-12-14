@@ -8,13 +8,12 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h2 class="text-center text-white">Register User</h2>
+        <h2 class="text-center text-white">Промяна данните на потребител</h2>
         <form
-                th:action="@{/users/register}"
-                th:method="post"
+                th:action="@{/manage/user/edit}"
+                th:method="POST"
                 th:object="${userModel}"
                 class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-
 
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
@@ -24,7 +23,8 @@
                            th:field="*{username}"
                            th:errorclass="is-invalid"
                            type="text" min="4" max="20" class="form-control"
-                           placeholder="Потребителско име"/>
+                           placeholder="Потребителско име"
+                           disabled/>
                     <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                        class="invalid-feedback errors alert alert-danger">
                         Потребителското име е задължително
@@ -70,14 +70,14 @@
                         Фамилното име е задължително и трябва да е между 4 и 20 букви.
                     </p>
                 </div>
-
             </div>
 
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="password" class="text-white font-weight-bold">Парола</label>
-                    <input id="password"
-                           name="password"
+                    <label for="Password" class="text-white font-weight-bold">Парола (изисква се за потвърждение на
+                        самоличността)</label>
+                    <input id="Password"
+                           name="Password"
                            th:field="*{password}"
                            th:errorclass="is-invalid"
                            type="password" min="4" max="20" class="form-control"
@@ -86,29 +86,17 @@
                         Паролата е задължителна
                     </p>
                 </div>
-                <div class="form-group col-md-6 mb-3">
-                    <label for="confirmPassword" class="text-white font-weight-bold">Потвърди парола</label>
-                    <input id="confirmPassword"
-                           th:field="*{confirmPassword}"
-                           type="password" min="4" max="20" class="form-control"
-                           placeholder="Потвърдете паролата"/>
-                    <p class="invalid-feedback errors alert alert-danger">
-                        Потвърждението на паролата е задължително
-                    </p>
-                </div>
-            </div>
-            <div th:if="${userNameOccupied}" class="row">
-                <div class="form-group col-md-12 mb-6">
-                    <p class="errors alert alert-danger">
-                        Потребителското име е вече заето!
-                    </p>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col col-md-4">
-                    <div class="button-holder d-flex">
-                        <input type="submit" class="btn btn-info btn-lg" value="Създай акаунт"/>
+                <div class="col">
+                    <div class="button-holder d-flex justify-content-end">
+                        <input type="submit" class="btn btn-info btn-lg" value="Запис"/>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="button-holder d-flex justify-content-start">
+                        <a class="btn btn-info btn-lg" href="/" role="button">Отказ</a>
                     </div>
                 </div>
             </div>

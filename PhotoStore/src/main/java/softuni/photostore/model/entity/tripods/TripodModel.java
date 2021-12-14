@@ -1,6 +1,7 @@
 package softuni.photostore.model.entity.tripods;
 
 import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
@@ -30,8 +31,8 @@ public class TripodModel extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany
-    private List<TripodPicture> pictures;
+    @OneToOne
+    private PictureEntity pictures;
 
     public TripodModel() {
     }
@@ -81,11 +82,11 @@ public class TripodModel extends BaseEntity {
         return this;
     }
 
-    public List<TripodPicture> getPictures() {
+    public PictureEntity getPictures() {
         return pictures;
     }
 
-    public TripodModel setPictures(List<TripodPicture> pictures) {
+    public TripodModel setPictures(PictureEntity pictures) {
         this.pictures = pictures;
         return this;
     }

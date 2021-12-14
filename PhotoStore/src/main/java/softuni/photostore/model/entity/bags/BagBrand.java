@@ -1,17 +1,17 @@
 package softuni.photostore.model.entity.bags;
 import softuni.photostore.model.entity.BaseEntity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "bags_brands")
 public class BagBrand extends BaseEntity {
 
     @Column(name = "brand_name", nullable = false, unique = true)
     private String brandName;
 
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
     private List<BagModel> bags;
 
     public BagBrand() {

@@ -1,8 +1,8 @@
 package softuni.photostore.model.entity.enums;
 
 public enum LensMountTypeEnum {
-    DSLR ("Обективи за DSLR фороапарати", "lenses/dslr"),
-    MIRRORLESS ("Обективи за безогледални фотоапарати", "lenses/mirrorless");
+    DSLR ("Обективи за DSLR фороапарати", "dslr"),
+    MIRRORLESS ("Обективи за безогледални фотоапарати", "mirrorless");
 
     private String title;
     private String href;

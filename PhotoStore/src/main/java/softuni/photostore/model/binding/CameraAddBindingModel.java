@@ -1,56 +1,55 @@
-package softuni.photostore.model.entity.cameras;
+package softuni.photostore.model.binding;
 
+import org.springframework.web.multipart.MultipartFile;
 import softuni.photostore.model.entity.BaseEntity;
 import softuni.photostore.model.entity.PictureEntity;
+import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "camera_models")
-public class CameraModel extends BaseEntity {
+public class CameraAddBindingModel extends BaseEntity {
 
-    @ManyToOne
-    private CameraBrand brand;
+    @NotBlank
+    private String brand;
 
-    @Column(name = "camera_name", nullable = false)
+    @NotBlank
+    @Size(min = 4)
     private String cameraName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @NotNull
     private CameraTypeEnum cameraType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @NotNull
     private CameraSensorSizeEnum sensorSize;
 
-    @Column(nullable = false)
+    @NotNull
+    @Min(value = 0)
     private Double megapixels;
 
-    @Column(name = "price", nullable = false)
+    @NotNull
+    @Min(value = 0)
     private BigDecimal price;
 
-    @Column(nullable = false)
+    @NotNull
+    @Min(value = 0)
     private Integer quantity;
 
-    @Column(columnDefinition = "TEXT")
+    @NotBlank
+    @Size(min = 10)
     private String description;
 
-    @OneToOne
-    private PictureEntity pictures;
+    private MultipartFile picture;
 
-    public CameraModel() {
-    }
-
-    public CameraBrand getBrand() {
+    public String getBrand() {
         return brand;
     }
 
-    public CameraModel setBrand(CameraBrand brand) {
+    public CameraAddBindingModel setBrand(String brand) {
         this.brand = brand;
         return this;
     }
@@ -59,7 +58,7 @@ public class CameraModel extends BaseEntity {
         return cameraName;
     }
 
-    public CameraModel setCameraName(String cameraName) {
+    public CameraAddBindingModel setCameraName(String cameraName) {
         this.cameraName = cameraName;
         return this;
     }
@@ -68,7 +67,7 @@ public class CameraModel extends BaseEntity {
         return cameraType;
     }
 
-    public CameraModel setCameraType(CameraTypeEnum cameraType) {
+    public CameraAddBindingModel setCameraType(CameraTypeEnum cameraType) {
         this.cameraType = cameraType;
         return this;
     }
@@ -77,7 +76,7 @@ public class CameraModel extends BaseEntity {
         return sensorSize;
     }
 
-    public CameraModel setSensorSize(CameraSensorSizeEnum sensorSize) {
+    public CameraAddBindingModel setSensorSize(CameraSensorSizeEnum sensorSize) {
         this.sensorSize = sensorSize;
         return this;
     }
@@ -86,7 +85,7 @@ public class CameraModel extends BaseEntity {
         return megapixels;
     }
 
-    public CameraModel setMegapixels(Double megapixels) {
+    public CameraAddBindingModel setMegapixels(Double megapixels) {
         this.megapixels = megapixels;
         return this;
     }
@@ -95,7 +94,7 @@ public class CameraModel extends BaseEntity {
         return price;
     }
 
-    public CameraModel setPrice(BigDecimal price) {
+    public CameraAddBindingModel setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }
@@ -104,7 +103,7 @@ public class CameraModel extends BaseEntity {
         return quantity;
     }
 
-    public CameraModel setQuantity(Integer quantity) {
+    public CameraAddBindingModel setQuantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }
@@ -113,17 +112,17 @@ public class CameraModel extends BaseEntity {
         return description;
     }
 
-    public CameraModel setDescription(String description) {
+    public CameraAddBindingModel setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public PictureEntity getPictures() {
-        return pictures;
+    public MultipartFile getPicture() {
+        return picture;
     }
 
-    public CameraModel setPictures(PictureEntity pictures) {
-        this.pictures = pictures;
+    public CameraAddBindingModel setPicture(MultipartFile picture) {
+        this.picture = picture;
         return this;
     }
 }

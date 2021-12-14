@@ -1,6 +1,7 @@
 package softuni.photostore.model.entity.flashes;
 
 import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
@@ -40,8 +41,8 @@ public class FlashModel extends BaseEntity {
     @Column(nullable = false)
     private Boolean isHSS;
 
-    @OneToMany
-    private List<FlashPicture> pictures;
+    @OneToOne
+    private PictureEntity pictures;
 
     public FlashModel() {
     }
@@ -118,11 +119,11 @@ public class FlashModel extends BaseEntity {
         return this;
     }
 
-    public List<FlashPicture> getPictures() {
+    public PictureEntity getPictures() {
         return pictures;
     }
 
-    public FlashModel setPictures(List<FlashPicture> pictures) {
+    public FlashModel setPictures(PictureEntity pictures) {
         this.pictures = pictures;
         return this;
     }

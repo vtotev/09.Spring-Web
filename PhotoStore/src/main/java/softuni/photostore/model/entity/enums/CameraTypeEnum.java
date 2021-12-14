@@ -1,9 +1,9 @@
 package softuni.photostore.model.entity.enums;
 
 public enum CameraTypeEnum {
-    DSLR ("DSLR фороапарати", "cameras/dslr"),
-    MIRRORLESS ("Безогледални фотоапарати", "cameras/mirrorless"),
-    COMPACT ("Компактни фотоапарати", "cameras/compact");
+    DSLR ("DSLR фороапарати", "dslr"),
+    MIRRORLESS ("Безогледални фотоапарати", "mirrorless"),
+    COMPACT ("Компактни фотоапарати", "compact");
 
     private String title;
     private String href;

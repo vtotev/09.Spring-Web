@@ -2,10 +2,7 @@ package softuni.photostore.model.entity.cameras;
 
 import softuni.photostore.model.entity.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,7 +12,7 @@ public class CameraBrand extends BaseEntity {
     @Column(name = "brand_name", nullable = false, unique = true)
     private String brandName;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
     private List<CameraModel> cameraModels;
 
     public CameraBrand() {
