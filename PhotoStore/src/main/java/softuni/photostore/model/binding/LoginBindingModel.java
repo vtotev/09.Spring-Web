@@ -10,7 +10,7 @@ public class LoginBindingModel {
     private String email;
 
     @NotBlank
-    @Size(min = 4)
+    @Size(min = 3)
     private String password;
 
     public LoginBindingModel() {

@@ -34,7 +34,7 @@ public class PictureServiceImpl implements PictureService {
             picture.setTitle(title)
                     .setPublicId(pictureUpload.getPublicId())
                     .setUrl(pictureUpload.getUrl());
-            picture = pictureRepository.save(picture);
+//            picture = pictureRepository.save(picture);
         }
 
         return picture;
@@ -46,5 +46,15 @@ public class PictureServiceImpl implements PictureService {
             cloudinaryService.delete(picture.getPublicId());
             pictureRepository.delete(picture);
         }
+    }
+
+    @Override
+    public PictureEntity updatePicture(PictureEntity oldPicture, MultipartFile pictureFile) {
+        if (!pictureFile.isEmpty()) {
+            String title = oldPicture.getTitle();
+//            deletePicture(oldPicture);
+            return addPicture(title, pictureFile);
+        }
+        return oldPicture;
     }
 }

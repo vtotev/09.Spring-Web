@@ -41,7 +41,7 @@ public class FlashModel extends BaseEntity {
     @Column(nullable = false)
     private Boolean isHSS;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PictureEntity pictures;
 
     public FlashModel() {

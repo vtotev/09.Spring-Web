@@ -4,12 +4,11 @@ import softuni.photostore.model.entity.BaseEntity;
 import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
-import softuni.photostore.model.entity.enums.CameraTypeEnum;
+import softuni.photostore.model.entity.enums.LensMountTypeEnum;
 import softuni.photostore.model.entity.enums.LensTypeEnum;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "lens_models")
@@ -26,7 +25,7 @@ public class LensModel extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CameraTypeEnum cameraTypeCompatibility;
+    private LensMountTypeEnum cameraTypeCompatibility;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -35,7 +34,6 @@ public class LensModel extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LensTypeEnum lensType;
-
 
     @Column(nullable = false)
     private Double fastestAperture;
@@ -49,7 +47,7 @@ public class LensModel extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PictureEntity pictures;
 
     public LensModel() {
@@ -82,11 +80,11 @@ public class LensModel extends BaseEntity {
         return this;
     }
 
-    public CameraTypeEnum getCameraTypeCompatibility() {
+    public LensMountTypeEnum getCameraTypeCompatibility() {
         return cameraTypeCompatibility;
     }
 
-    public LensModel setCameraTypeCompatibility(CameraTypeEnum cameraTypeCompatibility) {
+    public LensModel setCameraTypeCompatibility(LensMountTypeEnum cameraTypeCompatibility) {
         this.cameraTypeCompatibility = cameraTypeCompatibility;
         return this;
     }

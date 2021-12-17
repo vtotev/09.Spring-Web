@@ -91,7 +91,7 @@
                             <li th:each="c : ${cameraBrands}">
 
                                 <a class="dropdown-item"
-                                   th:href="*{c.getBrandName()}">
+                                   th:href="@{/flashes/{type}(type=*{c.getBrandName()})}">
                                     <img src="/images/flashes/flash.png" height="48"
                                          th:text="*{' Светкавици за ' + c.getBrandName()}"></a>
                             </li>
@@ -180,14 +180,12 @@
 
                     <div sec:authorize="hasRole('ADMIN')">
                         <a class="dropdown-item" th:href="@{/manage/users}">Акаунти</a>
-                        <a class="dropdown-item" th:href="@{/manage/products}">Продукти</a>
                     </div>
 
                     <div sec:authorize="isAuthenticated()">
                         <div sec:authorize="!hasRole('ADMIN')">
                             <a class="dropdown-item" th:href="@{/manage/user/edit}">Промяна на данни</a>
                             <a class="dropdown-item" th:href="@{/manage/user/changepassword}">Смяна на парола</a>
-                            <!--                            <a class="dropdown-item" th:href="@{/manage/products}">Продукти</a>-->
                         </div>
 
                         <form th:action="@{/users/logout}" th:method="post">

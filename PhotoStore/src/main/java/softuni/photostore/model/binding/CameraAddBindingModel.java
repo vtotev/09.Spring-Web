@@ -18,7 +18,7 @@ public class CameraAddBindingModel extends BaseEntity {
     private String brand;
 
     @NotBlank
-    @Size(min = 4)
+    @Size(min = 3)
     private String cameraName;
 
     @NotNull

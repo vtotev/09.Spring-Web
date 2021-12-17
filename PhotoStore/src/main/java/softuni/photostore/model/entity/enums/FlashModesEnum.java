@@ -1,7 +1,7 @@
 package softuni.photostore.model.entity.enums;
 
 public enum FlashModesEnum {
-    TTL ("TTL"), MANUAL ("Manual");
+    TTL ("Автоматична (TTL)"), MANUAL ("Ръчна (non-TTL)");
 
     private String title;
 

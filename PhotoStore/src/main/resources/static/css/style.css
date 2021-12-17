@@ -15,6 +15,7 @@ body {
     /*background-color: rgba(0,0,0,0.05);*/
     min-height: 80vh;
     padding-top: 30px;
+    margin-bottom: 30px;
 }
 
 img {

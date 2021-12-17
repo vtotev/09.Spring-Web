@@ -58,7 +58,7 @@
                            name="camName"
                            th:field="*{cameraName}"
                            th:errorclass="is-invalid"
-                           type="text" min="4" class="form-control"
+                           type="text" min="3" class="form-control"
                            placeholder="Модел камера"/>
                     <p th:if="${#fields.hasErrors('cameraName')}"
                        class="invalid-feedback errors alert alert-danger">

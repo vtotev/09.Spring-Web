@@ -30,9 +30,9 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
           requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
           antMatchers("/", "/users/login", "/users/register").permitAll().
           antMatchers("/manage/users").hasRole(UserRoleEnum.ADMIN.name()).
-          antMatchers("/**/manage/**").hasRole(UserRoleEnum.ADMIN.name()).
-          antMatchers("/manage/user").authenticated().
-//          antMatchers("/**").authenticated().
+          antMatchers("/manage/user/**").authenticated().
+            antMatchers("/**/manage/**").hasRole(UserRoleEnum.ADMIN.name()).
+            antMatchers("/**").permitAll().
         and().
           formLogin().
           loginPage("/users/login").
@@ -51,19 +51,8 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    // This gives spring two important components.
-    // 1. Our user details service that translates usernames/emails, phone numbers, etc/
-    //    to UserDetails
-    // 2. Password encoder - the component that can decide if the user password matches
     auth.
         userDetailsService(userDetailsService).
         passwordEncoder(passwordEncoder);
-
-    // registration:
-    // topsecretpass -> password encoder -> kfskjhfkjshfkjdshfkjdsh (hashed pwd)
-
-    // login:
-    // (username, raw_password) ->
-    // password_encoder.matches(raw_password, hashed_pwd)
   }
 }

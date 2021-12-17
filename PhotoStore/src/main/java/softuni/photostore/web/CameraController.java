@@ -11,7 +11,6 @@ import softuni.photostore.model.binding.CameraBrandAddBindingModel;
 import softuni.photostore.model.entity.cameras.CameraModel;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
 import softuni.photostore.model.service.CameraFilterModel;
-import softuni.photostore.service.CameraBrandsService;
 import softuni.photostore.service.CameraService;
 
 import javax.validation.Valid;
@@ -20,12 +19,10 @@ import java.util.List;
 @Controller
 public class CameraController {
     private final CameraService cameraService;
-    private final CameraBrandsService brandsService;
     private final ModelMapper modelMapper;
 
-    public CameraController(CameraService cameraService, CameraBrandsService brandsService, ModelMapper modelMapper) {
+    public CameraController(CameraService cameraService, ModelMapper modelMapper) {
         this.cameraService = cameraService;
-        this.brandsService = brandsService;
         this.modelMapper = modelMapper;
     }
 
@@ -55,16 +52,17 @@ public class CameraController {
         return "cameras";
     }
 
-
     // CAMERA BRANDS OPERATIONS
 
     @GetMapping("/cameras/manage")
     public String manage(Model model) {
-        model.addAttribute("brands", brandsService.getAllBrands());
-        model.addAttribute("cameras", cameraService.getAllCameras());
+        model.addAttribute("brands", cameraService.getAllBrands());
+        model.addAttribute("cameras", cameraService.getAllCamerasForManagement());
         if (!model.containsAttribute("newBrand")) {
-            model.addAttribute("newBrand", new CameraBrandAddBindingModel())
-                    .addAttribute("brandExisting", false);
+            model.addAttribute("newBrand", new CameraBrandAddBindingModel());
+        }
+        if (!model.containsAttribute("brandExisting")) {
+            model.addAttribute("brandExisting", false);
         }
         if (!model.containsAttribute("brandNotMeetingRequirements")) {
             model.addAttribute("brandNotMeetingRequirements", false);
@@ -77,7 +75,7 @@ public class CameraController {
 
     @PostMapping("/cameras/manage/brand/add")
     public String addBrand(@Valid CameraBrandAddBindingModel brand, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        boolean brandExisting = brandsService.isBrandExisting(brand.getBrandName());
+        boolean brandExisting = cameraService.isBrandExisting(brand.getBrandName());
 
         if (brandExisting) {
             redirectAttributes.addFlashAttribute("brandExisting", brandExisting);
@@ -88,14 +86,14 @@ public class CameraController {
             redirectAttributes.addFlashAttribute("brandNotMeetingRequirements", true);
             return "redirect:/cameras/manage";
         }
-        boolean isRegistered = brandsService.registerNewBrand(brand);
+        boolean isRegistered = cameraService.registerNewBrand(brand);
         redirectAttributes.addFlashAttribute("brandAddedSuccessfully", isRegistered);
         return "redirect:/cameras/manage";
     }
 
     @PostMapping("cameras/manage/brand/delete/{id}")
     public String deleteBrand(@PathVariable String id) {
-        brandsService.deleteBrandWithId(id);
+        cameraService.deleteBrandWithId(id);
         return "redirect:/cameras/manage";
     }
 
@@ -104,7 +102,7 @@ public class CameraController {
 
     @GetMapping("/cameras/manage/model/add")
     public String addCamera(Model model) {
-        model.addAttribute("brands", brandsService.getAllBrands());
+        model.addAttribute("brands", cameraService.getAllBrands());
         if (!model.containsAttribute("noPictureSelected")) {
             model.addAttribute("noPictureSelected", false);
         }
@@ -120,14 +118,12 @@ public class CameraController {
                                    RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || cameraAddBindingModel.getPicture().isEmpty()) {
             redirectAttributes.addFlashAttribute("cameraModel", cameraAddBindingModel);
-            if (cameraAddBindingModel.getPicture().isEmpty()) {
-                redirectAttributes.addFlashAttribute("noPictureSelected", true);
-            }
+            redirectAttributes.addFlashAttribute("noPictureSelected", cameraAddBindingModel.getPicture().isEmpty());
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.cameraModel", bindingResult);
             return "redirect:/cameras/manage/model/add";
         }
 
-        boolean result = cameraService.addNewCamera(cameraAddBindingModel);
+        cameraService.addNewCamera(cameraAddBindingModel);
 
         return "redirect:/cameras/manage";
     }
@@ -140,7 +136,7 @@ public class CameraController {
 
     @GetMapping("/cameras/manage/edit/{id}")
     public String editCamera(@PathVariable String id, Model model) {
-        model.addAttribute("brands", brandsService.getAllBrands());
+        model.addAttribute("brands", cameraService.getAllBrands());
         if (!model.containsAttribute("cameraModel")) {
             CameraModel cameraById = cameraService.getCameraById(id);
             CameraAddBindingModel editModel = modelMapper.map(cameraById, CameraAddBindingModel.class);
@@ -159,10 +155,10 @@ public class CameraController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("cameraModel", cameraAddBindingModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.cameraModel", bindingResult);
-            return "redirect:/cameras/manage/edit/"+id;
+            return "redirect:/cameras/manage/edit/" + id;
         }
 
-        boolean result = cameraService.editCamera(id, cameraAddBindingModel);
+        cameraService.editCamera(id, cameraAddBindingModel);
 
         return "redirect:/cameras/manage";
     }
@@ -171,7 +167,7 @@ public class CameraController {
 
     @GetMapping("/cameras/details/{id}")
     public String showCameraDetails(@PathVariable String id, Model model) {
-        model.addAttribute("camera", cameraService.getCameraById(id));
+        model.addAttribute("camera", cameraService.getCameraDetailsById(id));
         return "camera-details";
     }
 }

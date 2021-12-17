@@ -3,30 +3,35 @@ package softuni.photostore.service.impl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import softuni.photostore.model.binding.CameraAddBindingModel;
+import softuni.photostore.model.binding.CameraBrandAddBindingModel;
 import softuni.photostore.model.entity.PictureEntity;
+import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.cameras.CameraModel;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
 import softuni.photostore.model.service.CameraFilterModel;
+import softuni.photostore.model.view.CameraManageViewModel;
+import softuni.photostore.model.view.CameraViewModel;
+import softuni.photostore.repository.CameraBrandRepository;
 import softuni.photostore.repository.CameraModelRepository;
-import softuni.photostore.service.CameraBrandsService;
 import softuni.photostore.service.CameraService;
 import softuni.photostore.service.PictureService;
 
-import java.io.IOException;
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CameraServiceImpl implements CameraService {
 
     private final CameraModelRepository cameraRepository;
-    private final CameraBrandsService brandsService;
+    private final CameraBrandRepository brandRepository;
     private final PictureService pictureService;
     private final ModelMapper modelMapper;
 
-    public CameraServiceImpl(CameraModelRepository cameraRepository, CameraBrandsService brandsService, PictureService pictureService, ModelMapper modelMapper) {
+    public CameraServiceImpl(CameraModelRepository cameraRepository, CameraBrandRepository brandRepository, PictureService pictureService, ModelMapper modelMapper) {
         this.cameraRepository = cameraRepository;
-        this.brandsService = brandsService;
+        this.brandRepository = brandRepository;
         this.pictureService = pictureService;
         this.modelMapper = modelMapper;
     }
@@ -37,29 +42,11 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
-    public List<CameraModel> getAllCameras() {
-        return cameraRepository.findAll();
-    }
-
-    @Override
     public boolean addNewCamera(CameraAddBindingModel cameraAddBindingModel) {
         PictureEntity picture = null;
         picture = pictureService.addPicture(cameraAddBindingModel.getCameraName(), cameraAddBindingModel.getPicture());
-
-//            CloudinaryImage pictureUpload;
-//            try {
-//                pictureUpload = cloudinaryService.upload(cameraAddBindingModel.getPicture());
-//            } catch (IOException e) {
-//                return false;
-//            }
-//            picture = new PictureEntity();
-//            picture.setTitle(cameraAddBindingModel.getCameraName())
-//                    .setPublicId(pictureUpload.getPublicId())
-//                    .setUrl(pictureUpload.getUrl());
-//            picture = pictureService.addPicture(picture);
-//        }
         CameraModel camera = modelMapper.map(cameraAddBindingModel, CameraModel.class);
-        camera.setBrand(brandsService.getBrandByName(cameraAddBindingModel.getBrand()))
+        camera.setBrand(this.getBrandByName(cameraAddBindingModel.getBrand()))
                 .setPictures(picture);
 
         cameraRepository.save(camera);
@@ -83,36 +70,16 @@ public class CameraServiceImpl implements CameraService {
 
     @Override
     public boolean editCamera(String id, CameraAddBindingModel editModel) {
-        CameraModel camToEdit = cameraRepository.findById(id).orElse(null);
-        PictureEntity picture = camToEdit.getPictures();
-        String oldPictureId = picture.getPublicId();
-//        if (!editModel.getPicture().isEmpty()) {
-//            CloudinaryImage pictureUpload;
-//            try {
-//                pictureUpload = cloudinaryService.upload(editModel.getPicture());
-//            } catch (IOException e) {
-//                return false;
-//            }
-//            picture.setTitle(editModel.getCameraName())
-//                    .setPublicId(pictureUpload.getPublicId())
-//                    .setUrl(pictureUpload.getUrl());
-//            pictureService.deletePicture(picture);
-//            picture = pictureService.addPicture(picture);
-//            cloudinaryService.delete(oldPictureId);
-//        }
+        CameraModel camToEdit = this.getCameraById(id);
+        PictureEntity oldPicture = camToEdit.getPictures();
+        PictureEntity picture = pictureService.updatePicture(camToEdit.getPictures(), editModel.getPicture());
         camToEdit = modelMapper.map(editModel, CameraModel.class);
-        camToEdit.setBrand(brandsService.getBrandByName(editModel.getBrand()))
+        camToEdit.setBrand(this.getBrandByName(editModel.getBrand()))
                 .setPictures(picture);
-//        camToEdit.setBrand(brandsService.getBrandByName(editModel.getBrand()))
-//                .setCameraName(editModel.getCameraName())
-//                .setCameraType(editModel.getCameraType())
-//                .setDescription(editModel.getDescription())
-//                .setMegapixels(editModel.getMegapixels())
-//                .setSensorSize(editModel.getSensorSize())
-//                .setQuantity(editModel.getQuantity())
-//                .setPictures(picture);
-
         cameraRepository.save(camToEdit);
+        if (picture.getId() != oldPicture.getId()) {
+            pictureService.deletePicture(oldPicture);
+        }
         return true;
     }
 
@@ -122,4 +89,54 @@ public class CameraServiceImpl implements CameraService {
         pictureService.deletePicture(toDelete.getPictures());
         cameraRepository.delete(toDelete);
     }
+
+
+    // FOR BRANDS
+
+    @Override
+    public List<CameraBrand> getAllBrands() {
+        return brandRepository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public void deleteBrandWithId(String id) {
+        brandRepository.deleteById(id);
+    }
+
+    @Override
+    public CameraBrand getBrandByName(String name) {
+        return brandRepository.findByBrandName(name).orElse(null)   ;
+    }
+
+    @Override
+    public CameraViewModel getCameraDetailsById(String id) {
+        return cameraRepository.findById(id)
+                .map(cameraModel -> modelMapper.map(cameraModel, CameraViewModel.class))
+                .orElse(null);
+    }
+
+    @Override
+    public List<CameraManageViewModel> getAllCamerasForManagement() {
+        return cameraRepository.findAll()
+                .stream().map(cameraModel -> modelMapper.map(cameraModel, CameraManageViewModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean registerNewBrand(CameraBrandAddBindingModel brand) {
+        if (isBrandExisting(brand.getBrandName())) {
+            return false;
+        }
+        CameraBrand newBrand = new CameraBrand()
+                .setBrandName(brand.getBrandName());
+        brandRepository.save(newBrand);
+        return true;
+    }
+
+    @Override
+    public boolean isBrandExisting(String brand) {
+        return brandRepository.findByBrandName(brand).isPresent();
+    }
+
 }

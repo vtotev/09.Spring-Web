@@ -40,7 +40,7 @@ public class CameraModel extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PictureEntity pictures;
 
     public CameraModel() {

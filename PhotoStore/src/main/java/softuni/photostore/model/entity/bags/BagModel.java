@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "bags")
+@Table(name = "bags_models")
 public class BagModel extends BaseEntity {
 
     @ManyToOne
@@ -31,7 +31,7 @@ public class BagModel extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PictureEntity pictures;
 
     public BagModel() {

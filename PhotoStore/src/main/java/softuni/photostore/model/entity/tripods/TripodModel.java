@@ -31,7 +31,7 @@ public class TripodModel extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private PictureEntity pictures;
 
     public TripodModel() {

@@ -34,7 +34,6 @@
                                         <h5 th:text="'Цена: '+*{price} + ' лв.'"></h5>
                                     </div>
 
-
                                     <div class="row pt-3 text-center text-info" th:if="*{quantity > 0}">
                                         <h6>В наличност</h6>
                                     </div>
@@ -44,8 +43,8 @@
                                     </div>
 
                                     <div class="row m-4 pt-4">
-                                        <a class="btn btn-success" href="/">Купи
-                                        </a>
+                                        <a class="btn btn-success" href="/" th:if="*{quantity > 0}">Купи</a>
+                                        <a class="btn btn-success disabled" th:unless="*{quantity > 0}">Купи</a>
                                     </div>
                                 </div>
                             </div>

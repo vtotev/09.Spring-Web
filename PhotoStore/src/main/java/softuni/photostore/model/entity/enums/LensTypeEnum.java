@@ -1,7 +1,7 @@
 package softuni.photostore.model.entity.enums;
 
 public enum LensTypeEnum {
-    PRIME ("Prime lens"), ZOOM ("ZOOM LENS");
+    PRIME ("Фиксирани (твърди) обективи"), ZOOM ("Варио (зуум) обективи");
 
     private String title;
 
