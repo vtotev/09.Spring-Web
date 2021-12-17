@@ -156,13 +156,15 @@
                             <td th:text="*{quantity}">quantity</td>
                             <td th:text="*{price}">price</td>
                             <td>
-                                <div class="float-end">
-                                    <a class="btn btn-secondary" th:href="@{/bags/manage/edit/{id}(id = *{id})}"
-                                       role="button">Редактирай</a>
+                                <div class="float-end text-nowrap">
+                                    <a class="btn mybtn" th:href="@{/bags/manage/edit/{id}(id = *{id})}"
+                                       role="button">
+                                        <img src="/images/edit.png" width="40"/>
+                                    </a>
 
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    <button type="button" class="btn mybtn" data-bs-toggle="modal"
                                             th:data-bs-target="'#deleteBags_'+ *{id}">
-                                        Изтрий
+                                        <img src="/images/delete.png" width="40"/>
                                     </button>
 
                                     <!-- Modal -->

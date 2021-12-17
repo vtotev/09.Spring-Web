@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.photostore.model.binding.*;
-import softuni.photostore.model.entity.bags.BagModel;
 import softuni.photostore.model.entity.tripods.TripodModel;
-import softuni.photostore.model.service.BagFilterModel;
-import softuni.photostore.model.view.BagViewModel;
+import softuni.photostore.model.service.TripodFilterModel;
 import softuni.photostore.model.view.TripodViewModel;
-import softuni.photostore.service.BagsService;
 import softuni.photostore.service.TripodService;
 
 import javax.validation.Valid;
@@ -35,24 +32,24 @@ public class TripodsController {
         List<TripodViewModel> allTripods = tripodService.getAllTripodsOverviewModel();
         model.addAttribute("tripods", allTripods);
         model.addAttribute("tripodBrands", tripodService.getAllBrands());
-//        if (!model.containsAttribute("filter")) {
-//            model.addAttribute("filter", new TripodFilterModel().setBrand(""));
-//        }
+        if (!model.containsAttribute("filter")) {
+            model.addAttribute("filter", new TripodFilterModel().setBrand(""));
+        }
         if (!model.containsAttribute("areTripodsAvailable")) {
             model.addAttribute("areTripodsAvailable", !allTripods.isEmpty());
         }
         return "tripods";
     }
 
-//    @PostMapping("/tripods")
-//    public String filterBags(@PathVariable String type, BagFilterModel filterModel, Model model) {
-//        List<BagViewModel> allBagsByFilterCriteria = tripodService.getAllBagsByFilterCriteria(filterModel, type);
-//        model.addAttribute("bags", allBagsByFilterCriteria);
-//        model.addAttribute("bagBrands", tripodService.getAllBrands());
-//        model.addAttribute("filter", filterModel);
-//        model.addAttribute("areBagsAvailable", !allBagsByFilterCriteria.isEmpty());
-//        return "bags";
-//    }
+    @PostMapping("/tripods")
+    public String filterBags(TripodFilterModel filterModel, Model model) {
+        List<TripodViewModel> allTripodsByFilterCriteria = tripodService.getAllTripodsByFilterCriteria(filterModel);
+        model.addAttribute("tripods", allTripodsByFilterCriteria);
+        model.addAttribute("tripodBrands", tripodService.getAllBrands());
+        model.addAttribute("filter", filterModel);
+        model.addAttribute("areTripodsAvailable", !allTripodsByFilterCriteria.isEmpty());
+        return "tripods";
+    }
 
     // TRIPOD BRANDS OPERATIONS
 
@@ -100,7 +97,7 @@ public class TripodsController {
         return "redirect:/tripods/manage";
     }
 
-    @GetMapping("/tripods/manage/model/add")
+    @GetMapping("/tripods/manage/add")
     public String addTripod(Model model) {
         model.addAttribute("brands", tripodService.getAllBrands());
         if (!model.containsAttribute("noPictureSelected")) {
@@ -112,7 +109,7 @@ public class TripodsController {
         return "tripods-add";
     }
 
-    @PostMapping("/tripods/manage/model/add")
+    @PostMapping("/tripods/manage/add")
     public String addTripodConfirm(@Valid TripodAddBindingModel tripodAdd,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes) {
@@ -120,7 +117,7 @@ public class TripodsController {
             redirectAttributes.addFlashAttribute("tripodModel", tripodAdd);
             redirectAttributes.addFlashAttribute("noPictureSelected", tripodAdd.getPictures().isEmpty());
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.tripodModel", bindingResult);
-            return "redirect:/tripods/manage/model/add";
+            return "redirect:/tripods/manage/add";
         }
 
         boolean result = tripodService.addNewTripod(tripodAdd);
@@ -128,7 +125,7 @@ public class TripodsController {
         return "redirect:/tripods/manage";
     }
 
-    @PostMapping("/tripods/manage/model/delete/{id}")
+    @PostMapping("/tripods/manage/delete/{id}")
     public String deleteTripodModel(@PathVariable String id) {
         tripodService.deleteModelById(id);
         return "redirect:/tripods/manage";
@@ -162,12 +159,12 @@ public class TripodsController {
 
         return "redirect:/tripods/manage";
     }
-//
-//    // BAGS DETAILS VIEW
-//
-//    @GetMapping("/tripods/details/{id}")
-//    public String showBagDetails(@PathVariable String id, Model model) {
-//        model.addAttribute("bag", tripodService.getBagDetailsById(id));
-//        return "bags-details";
-//    }
+
+    // BAGS DETAILS VIEW
+
+    @GetMapping("/tripods/details/{id}")
+    public String showBagDetails(@PathVariable String id, Model model) {
+        model.addAttribute("tripod", tripodService.getTripodDetails(id));
+        return "tripods-details";
+    }
 }

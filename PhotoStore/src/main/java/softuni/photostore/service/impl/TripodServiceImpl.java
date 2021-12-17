@@ -6,9 +6,10 @@ import softuni.photostore.model.binding.TripodAddBindingModel;
 import softuni.photostore.model.binding.TripodBrandAddBindingModel;
 import softuni.photostore.model.binding.TripodEditBindingModel;
 import softuni.photostore.model.entity.PictureEntity;
-import softuni.photostore.model.entity.bags.BagModel;
 import softuni.photostore.model.entity.tripods.TripodBrand;
 import softuni.photostore.model.entity.tripods.TripodModel;
+import softuni.photostore.model.service.TripodFilterModel;
+import softuni.photostore.model.view.BagViewModel;
 import softuni.photostore.model.view.TripodManageViewModel;
 import softuni.photostore.model.view.TripodViewModel;
 import softuni.photostore.repository.TripodBrandRepository;
@@ -119,6 +120,21 @@ public class TripodServiceImpl implements TripodService {
             pictureService.deletePicture(oldPicture);
         }
         return true;
+    }
+
+    @Override
+    public TripodViewModel getTripodDetails(String id) {
+        return modelMapper.map(this.getTripodById(id), TripodViewModel.class);
+    }
+
+    @Override
+    public List<TripodViewModel> getAllTripodsByFilterCriteria(TripodFilterModel filter) {
+        return tripodRepository.findAllByFilterCriteria(
+                        (filter.getBrand() != null && filter.getBrand() != "") ? filter.getBrand() : null,
+                        filter.getPriceFrom() != null ? filter.getPriceFrom() : null,
+                        filter.getPriceTo() != null ? filter.getPriceTo() : null)
+                .stream().map(tripodModel -> modelMapper.map(tripodModel, TripodViewModel.class))
+                .collect(Collectors.toList());
     }
 
 

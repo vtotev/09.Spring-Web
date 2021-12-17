@@ -134,7 +134,7 @@
                             <h5 class="text-dark fw-bolder">Модели</h5>
                         </div>
                         <div class="col">
-                            <a class="btn btn-success float-end" th:href="@{/tripods/manage/model/add}" role="button">Добави</a>
+                            <a class="btn btn-success float-end" th:href="@{/tripods/manage/add}" role="button">Добави</a>
                         </div>
                     </div>
 
@@ -156,22 +156,22 @@
                             <td th:text="*{quantity}">quantity</td>
                             <td th:text="*{price}">price</td>
                             <td>
-                                <div class="float-end">
-                                    <a class="btn btn-secondary" th:href="@{/tripods/manage/edit/{id}(id = *{id})}"
-                                       role="button">Редактирай</a>
-
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                            th:data-bs-target="'#deleteBags_'+ *{id}">
-                                        Изтрий
+                                <div class="float-end text-nowrap">
+                                    <a class="btn mybtn" th:href="@{/tripods/manage/edit/{id}(id = *{id})}" role="button">
+                                        <img src="/images/edit.png" width="40" />
+                                    </a>
+                                    <button type="button" class="btn mybtn" data-bs-toggle="modal"
+                                            th:data-bs-target="'#deleteTripods_'+ *{id}">
+                                        <img src="/images/delete.png" width="40" />
                                     </button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" th:id="'deleteBags_'+ *{id}" tabindex="-1"
-                                         aria-labelledby="deleteBagsLabel" aria-hidden="true">
+                                    <div class="modal fade" th:id="'deleteTripods_'+ *{id}" tabindex="-1"
+                                         aria-labelledby="deleteTripodsLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content bg-info bg-opacity-75 border-danger">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteBagsLabel">Изтрий</h5>
+                                                    <h5 class="modal-title" id="deleteTripodsLabel">Изтрий</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
@@ -180,7 +180,7 @@
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
                                                     <form th:object="${c}"
-                                                          th:action="@{/tripods/manage/model/delete/{id}(id=*{id})}"
+                                                          th:action="@{/tripods/manage/delete/{id}(id=*{id})}"
                                                           th:method="POST">
 
                                                         <button type="submit" class="btn btn-danger btn-lg"

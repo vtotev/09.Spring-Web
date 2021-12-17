@@ -13,60 +13,59 @@
             </h1>
         </div>
         <div class="row">
-<!--            <div class="col-2 container d-none d-lg-block">-->
-<!--                <div class="row p-2 bg-dark bg-opacity-50 text-white">-->
-<!--                    <div class="bg-dark bg-opacity-50">-->
-<!--                        <h5 class="text-decoration-underline text-center">Филтър</h5>-->
-<!--                    </div>-->
-<!--                    <form th:object="${filter}"-->
-<!--                          th:action="@{'/bags/'+${type}}"-->
-<!--                          th:method="post">-->
-<!--                        &lt;!&ndash;                        ПРОИЗВОДИТЕЛИ&ndash;&gt;-->
-<!--                        <h6 class="text-center pt-1">Производител</h6>-->
-<!--                        <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" th:name="brandsRadio" th:id="brandsRadio1"-->
-<!--                                   th:value="''" th:field="${filter.brand}" th:checked="${filter.brand}">-->
-<!--                            <label class="form-check-label" th:for="brandsRadio1" th:text="Всички"></label>-->
-<!--                        </div>-->
-<!--                        <div class="form-check" th:each="b : ${bagBrands}" th:object="${b}">-->
-<!--                            <input class="form-check-input" type="radio" th:name="brandsRadio"-->
-<!--                                   th:id="'brandsRadio'+ *{id}" th:value="*{id}" th:field="${filter.brand}"-->
-<!--                                   th:checked="${filter.brand}">-->
-<!--                            <label class="form-check-label" th:for="'brandsRadio'+ *{id}"-->
-<!--                                   th:text="*{getBrandName()}"></label>-->
-<!--                        </div>-->
+            <div class="col-2 container d-none d-lg-block">
+                <div class="row p-2 bg-dark bg-opacity-50 text-white">
+                    <div class="bg-dark bg-opacity-50">
+                        <h5 class="text-decoration-underline text-center">Филтър</h5>
+                    </div>
+                    <form th:object="${filter}"
+                          th:action="@{'/tripods'}"
+                          th:method="post">
+                        <!--                        ПРОИЗВОДИТЕЛИ-->
+                        <h6 class="text-center pt-1">Производител</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" th:name="brandsRadio" th:id="brandsRadio1"
+                                   th:value="''" th:field="${filter.brand}" th:checked="${filter.brand}">
+                            <label class="form-check-label" th:for="brandsRadio1" th:text="Всички"></label>
+                        </div>
+                        <div class="form-check" th:each="b : ${tripodBrands}" th:object="${b}">
+                            <input class="form-check-input" type="radio" th:name="brandsRadio"
+                                   th:id="'brandsRadio'+ *{id}" th:value="*{id}" th:field="${filter.brand}"
+                                   th:checked="${filter.brand}">
+                            <label class="form-check-label" th:for="'brandsRadio'+ *{id}"
+                                   th:text="*{getBrandName()}"></label>
+                        </div>
 
+                        <!--                        ЦЕНА-->
+                        <div class="row">
+                            <label class="text-white fw-bold text-center p-1">Цена</label>
+                            <div class="col">
+                                <input id="priceFrom"
+                                       name="priceFrom"
+                                       th:field="*{priceFrom}"
+                                       th:errorclass="is-invalid"
+                                       type="number" class="form-control"
+                                       placeholder="от"/>
+                            </div>
+                            <div class="col">
+                                <input id="priceТо"
+                                       name="priceТо"
+                                       th:field="*{priceTo}"
+                                       th:errorclass="is-invalid"
+                                       type="text" class="form-control"
+                                       placeholder="до"/>
+                            </div>
+                        </div>
 
-<!--                        &lt;!&ndash;                        ЦЕНА&ndash;&gt;-->
-<!--                        <div class="row">-->
-<!--                            <label class="text-white fw-bold text-center p-1">Цена</label>-->
-<!--                            <div class="col">-->
-<!--                                <input id="priceFrom"-->
-<!--                                       name="priceFrom"-->
-<!--                                       th:field="*{priceFrom}"-->
-<!--                                       th:errorclass="is-invalid"-->
-<!--                                       type="number" class="form-control"-->
-<!--                                       placeholder="от"/>-->
-<!--                            </div>-->
-<!--                            <div class="col">-->
-<!--                                <input id="priceТо"-->
-<!--                                       name="priceТо"-->
-<!--                                       th:field="*{priceTo}"-->
-<!--                                       th:errorclass="is-invalid"-->
-<!--                                       type="text" class="form-control"-->
-<!--                                       placeholder="до"/>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        &lt;!&ndash;                        БУТОН&ndash;&gt;-->
-<!--                        <div class="row">-->
-<!--                            <button type="submit" class="btn btn-info mt-3"-->
-<!--                                    data-bs-toggle="modal">Приложи-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </div>-->
+                        <!--                        БУТОН-->
+                        <div class="row">
+                            <button type="submit" class="btn btn-info mt-3"
+                                    data-bs-toggle="modal">Приложи
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!--            СЪБОЩЕНИЕ ПРИ ЛИПСВАЩИ РЕЗУЛТАТИ-->
             <div class="col-10 px-4" th:unless="${areTripodsAvailable}">

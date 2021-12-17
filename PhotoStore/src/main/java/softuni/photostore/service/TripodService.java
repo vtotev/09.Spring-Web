@@ -5,6 +5,7 @@ import softuni.photostore.model.binding.TripodBrandAddBindingModel;
 import softuni.photostore.model.binding.TripodEditBindingModel;
 import softuni.photostore.model.entity.tripods.TripodBrand;
 import softuni.photostore.model.entity.tripods.TripodModel;
+import softuni.photostore.model.service.TripodFilterModel;
 import softuni.photostore.model.view.TripodManageViewModel;
 import softuni.photostore.model.view.TripodViewModel;
 
@@ -39,10 +40,7 @@ public interface TripodService {
 
     boolean editTripod(String id, TripodEditBindingModel editModel);
 
-//    BagViewModel getBagDetailsById(String id);
-//
-//    List<BagViewModel> getAllBagsByFilterCriteria(BagFilterModel filter, String bagType);
-//
-//    boolean editLens(String id, BagEditBindingModel editModel);
-//
+    TripodViewModel getTripodDetails(String id);
+
+    List<TripodViewModel> getAllTripodsByFilterCriteria(TripodFilterModel filter);
 }
