@@ -45,8 +45,8 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public List<Country> findAll() {
-        return repository.findAll();
+    public List<Country> findAllForToday() {
+        return repository.findAllByDateAdded(LocalDate.now());
     }
 
     @Override

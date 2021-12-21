@@ -2,8 +2,10 @@ package blankfactor.coronavirusscrapper.service;
 
 import blankfactor.coronavirusscrapper.entity.Continent;
 
+import java.time.LocalDate;
+
 public interface ContinentService {
     Continent addOrGetContinent(String continentName);
     Integer getMaxContinentNameLength();
-    Continent getContinentByName(String continentName);
+    Continent getContinentByNameAndDate(String continentName, LocalDate date);
 }

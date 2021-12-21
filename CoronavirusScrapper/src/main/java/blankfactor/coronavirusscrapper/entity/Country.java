@@ -1,5 +1,6 @@
 package blankfactor.coronavirusscrapper.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
@@ -54,21 +55,21 @@ public class Country extends BaseEntity {
         return this;
     }
 
-    public Continent getContinent() {
-        return continent;
-    }
-
-    public Country setContinent(Continent continent) {
-        this.continent = continent;
-        return this;
-    }
-
     public LocalDate getDateAdded() {
         return dateAdded;
     }
 
     public Country setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
+        return this;
+    }
+
+    public Continent getContinent() {
+        return continent;
+    }
+
+    public Country setContinent(Continent continent) {
+        this.continent = continent;
         return this;
     }
 }

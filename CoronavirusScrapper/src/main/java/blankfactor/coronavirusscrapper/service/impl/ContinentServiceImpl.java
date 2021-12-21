@@ -5,6 +5,8 @@ import blankfactor.coronavirusscrapper.repository.ContinentRepository;
 import blankfactor.coronavirusscrapper.service.ContinentService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class ContinentServiceImpl implements ContinentService {
     private final ContinentRepository continentRepository;
@@ -25,8 +27,8 @@ public class ContinentServiceImpl implements ContinentService {
     }
 
     @Override
-    public Continent getContinentByName(String continentName) {
-        return continentRepository.findByContinentName(continentName).orElse(null);
+    public Continent getContinentByNameAndDate(String continentName, LocalDate date) {
+        return continentRepository.findByContinentNameAndDate(continentName, date).orElse(null);
     }
 
 

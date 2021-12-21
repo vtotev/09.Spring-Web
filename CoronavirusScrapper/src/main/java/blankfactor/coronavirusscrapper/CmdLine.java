@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -24,6 +26,13 @@ public class CmdLine implements CommandLineRunner {
 
     private final CountryService countryService;
     private final ContinentService continentService;
+    private static final DecimalFormatSymbols dfSymbol = new DecimalFormatSymbols();
+
+    static {
+        dfSymbol.setGroupingSeparator(',');
+    }
+
+    private static final DecimalFormat df = new DecimalFormat("###,###,###", dfSymbol);
 
     public CmdLine(CountryService countryService, ContinentService continentService) {
         this.countryService = countryService;
@@ -31,19 +40,20 @@ public class CmdLine implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Scanner scanner = new Scanner(System.in);
         List<Element> elements = readDataFromWebsite();
-        LocalDate now = LocalDate.now();
+        LocalDate currDate = LocalDate.now();
 
-        if (!countryService.isDateAdded(now)) {
-            elements.forEach(element -> countryService.addCountry(element, now));
+        if (!countryService.isDateAdded(currDate) && ((elements != null) && !elements.isEmpty())) {
+            elements.forEach(element ->
+                    countryService.addCountry(element, currDate));
         }
 
         System.out.print("region=");
         String region = scanner.nextLine();
         if (region.isBlank()) {
-            List<Country> allCountries = countryService.findAll()
+            List<Country> allCountries = countryService.findAllForToday()
                     .stream().sorted((o1, o2) -> {
                         int i = o1.getContinent().getContinentName().compareTo(o2.getContinent().getContinentName());
                         if (i == 0) {
@@ -55,12 +65,12 @@ public class CmdLine implements CommandLineRunner {
             printAsTable(allCountries);
 
         } else {
-            Continent continentByName = continentService.getContinentByName(region);
+            Continent continentByName = continentService.getContinentByNameAndDate(region, currDate);
             if (continentByName != null) {
                 List<Country> countries = continentByName
                         .getCountries()
                         .stream()
-                        .sorted((o1, o2) -> o1.getCountry().compareTo(o2.getCountry()))
+                        .sorted(Comparator.comparing(Country::getCountry))
                         .collect(Collectors.toList());
                 printAsTable(countries);
                 exportRegionToCSV(region, countries);
@@ -77,7 +87,7 @@ public class CmdLine implements CommandLineRunner {
                     .map(this::convertToCSV)
                     .forEach(pw::println);
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -91,25 +101,23 @@ public class CmdLine implements CommandLineRunner {
     }
 
     private String checkValue(Long value) {
-        return value != null ? value.toString() : "N/A";
+
+        return value != null ? df.format(value) : "N/A";
     }
 
     private List<Element> readDataFromWebsite() {
-        Document covid = null;
         try {
-            covid = Jsoup.connect("https://www.worldometers.info/coronavirus/").get();
+            Document covid = Jsoup.connect("https://www.worldometers.info/coronavirus/").get();
             Element mainTable = covid.getElementById("main_table_countries_today");
             Element tbody = mainTable.select("tbody").first();
             Elements tr = tbody.select("tr");
-            List<Element> collect = tr.stream().skip(8).collect(Collectors.toList());
-            return collect;
+            return tr.stream().skip(8).collect(Collectors.toList());
         } catch (IOException e) {
             return null;
         }
     }
 
     private void printAsTable(List<Country> countries) {
-        Map<String, Integer> columnLengths = new HashMap<>();
         int continentLength = continentService.getMaxContinentNameLength();
         int countryLength = countryService.getMaxCountryNameLength();
         StringBuilder sb = new StringBuilder()
@@ -117,11 +125,13 @@ public class CmdLine implements CommandLineRunner {
                 .append("%").append(countryLength).append("s | ")
                 .append("%12s | ").append("%12s | ").append("%12s |").append(System.lineSeparator());
         String firstRow = String.format(sb.toString(), "Continent", "Country", "Total cases", "Total tests", "Active cases");
-        String lineSeparator = "-".repeat(firstRow.length()-2);
+        String lineSeparator = "-".repeat(firstRow.length() - 2);
         System.out.printf("%s%n%s%s%n", lineSeparator, firstRow, lineSeparator);
         if (!countries.isEmpty()) {
-            countries.forEach(country -> System.out.printf(sb.toString(), country.getContinent().getContinentName(),
-                    country.getCountry(), checkValue(country.getTotalCases()),
+            countries.forEach(country -> System.out.printf(sb.toString(),
+                    country.getContinent().getContinentName(),
+                    country.getCountry(),
+                    checkValue(country.getTotalCases()),
                     checkValue(country.getTotalTests()),
                     checkValue(country.getActiveCases())));
             System.out.println(lineSeparator);
