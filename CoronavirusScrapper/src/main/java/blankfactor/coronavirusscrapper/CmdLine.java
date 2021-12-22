@@ -45,9 +45,10 @@ public class CmdLine implements CommandLineRunner {
         List<Element> elements = readDataFromWebsite();
         LocalDate currDate = LocalDate.now();
 
-        if (!countryService.isDateAdded(currDate) && ((elements != null) && !elements.isEmpty())) {
+//        if (!countryService.isDateAdded(currDate) && ((elements != null) && !elements.isEmpty())) {
+        if ((elements != null) && !elements.isEmpty()) {
             elements.forEach(element ->
-                    countryService.addCountry(element, currDate));
+                    countryService.addOrUpdateCountry(element, currDate));
         }
 
         System.out.print("region=");

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CountryService {
-    void addCountry(Element data, LocalDate dateAdded);
+    void addOrUpdateCountry(Element data, LocalDate dateAdded);
     boolean isDateAdded(LocalDate date);
     List<Country> findAllForToday();
     Integer getMaxCountryNameLength();

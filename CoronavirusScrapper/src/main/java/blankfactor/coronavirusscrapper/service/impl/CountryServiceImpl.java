@@ -22,14 +22,16 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public void addCountry(Element data, LocalDate dateAdded) {
+    public void addOrUpdateCountry(Element data, LocalDate dateAdded) {
         String countryName = data.child(1).text();
+        Country country = repository.findByCountryAndDateAdded(countryName, dateAdded).orElse(new Country());
         String continentName = data.child(15).text();
         Long totalCases = getValueAsInt(data.child(2).text());
         Long totalTests = getValueAsInt(data.child(12).text());
         Long activeCases = getValueAsInt(data.child(8).text());
         Continent continent = continentService.addOrGetContinent(continentName);
-        Country country = new Country()
+//        Country country = new Country()
+        country
                 .setCountry(countryName)
                 .setActiveCases(activeCases)
                 .setTotalCases(totalCases)
