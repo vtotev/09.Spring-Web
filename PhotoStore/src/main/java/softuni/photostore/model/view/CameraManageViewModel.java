@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class CameraManageViewModel {
     private String id;
     private CameraBrand brand;
-    private String cameraName;
+    private String modelName;
     private BigDecimal price;
     private Integer quantity;
 
@@ -32,12 +32,12 @@ public class CameraManageViewModel {
         return this;
     }
 
-    public String getCameraName() {
-        return cameraName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public CameraManageViewModel setCameraName(String cameraName) {
-        this.cameraName = cameraName;
+    public CameraManageViewModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

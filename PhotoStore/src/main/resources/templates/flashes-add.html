@@ -85,16 +85,16 @@
 
             <div class="row">
                 <div class="form-group mb-3">
-                    <label for="flashName" class="text-white font-weight-bold">Модел</label>
-                    <input id="flashName"
-                           name="flashName"
-                           th:field="*{flashName}"
+                    <label for="modelName" class="text-white font-weight-bold">Модел</label>
+                    <input id="modelName"
+                           name="modelName"
+                           th:field="*{modelName}"
                            th:errorclass="is-invalid"
                            type="text" min="3" class="form-control"
                            placeholder="Модел на светкавицата"/>
-                    <p th:if="${#fields.hasErrors('flashName')}"
+                    <p th:if="${#fields.hasErrors('modelName')}"
                        class="invalid-feedback errors alert alert-danger">
-                        Модела на светкавицата е задължителен!
+                        Модела на светкавицата е задължителен и трябва да е между 3 и 200 символа!
                     </p>
                 </div>
             </div>

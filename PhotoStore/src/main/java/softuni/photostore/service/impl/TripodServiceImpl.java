@@ -6,6 +6,7 @@ import softuni.photostore.model.binding.TripodAddBindingModel;
 import softuni.photostore.model.binding.TripodBrandAddBindingModel;
 import softuni.photostore.model.binding.TripodEditBindingModel;
 import softuni.photostore.model.entity.PictureEntity;
+import softuni.photostore.model.entity.lenses.LensModel;
 import softuni.photostore.model.entity.tripods.TripodBrand;
 import softuni.photostore.model.entity.tripods.TripodModel;
 import softuni.photostore.model.service.TripodFilterModel;
@@ -17,6 +18,7 @@ import softuni.photostore.repository.TripodRepository;
 import softuni.photostore.service.PictureService;
 import softuni.photostore.service.TripodService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,8 +53,7 @@ public class TripodServiceImpl implements TripodService {
         if (isBrandExisting(brand.getBrandName())) {
             return false;
         }
-        TripodBrand newBrand = new TripodBrand()
-                .setBrandName(brand.getBrandName());
+        TripodBrand newBrand = new TripodBrand(brand.getBrandName());
         brandRepository.save(newBrand);
         return true;
     }
@@ -87,7 +88,7 @@ public class TripodServiceImpl implements TripodService {
     @Override
     public boolean addNewTripod(TripodAddBindingModel tripodAdd) {
         PictureEntity picture = null;
-        picture = pictureService.addPicture(tripodAdd.getTripodName(), tripodAdd.getPictures());
+        picture = pictureService.addPicture(tripodAdd.getModelName(), tripodAdd.getPictures());
         TripodModel tripodModel = modelMapper.map(tripodAdd, TripodModel.class);
         tripodModel
                 .setBrand(this.getBrandByName(tripodAdd.getBrand()))
@@ -97,8 +98,11 @@ public class TripodServiceImpl implements TripodService {
     }
 
     @Override
+    @Transactional
     public void deleteModelById(String id) {
-        tripodRepository.deleteById(id);
+        TripodModel toDelete = tripodRepository.findById(id).orElse(null);
+        pictureService.deletePicture(toDelete.getPictures());
+        tripodRepository.delete(toDelete);
     }
 
     @Override

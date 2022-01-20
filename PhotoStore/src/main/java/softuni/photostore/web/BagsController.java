@@ -57,7 +57,6 @@ public class BagsController {
 
     @GetMapping("/bags/manage")
     public String manage(Model model) {
-        // TODO
         model.addAttribute("brands", bagsService.getAllBrands());
         model.addAttribute("bags", bagsService.getAllBagsForManagement());
         if (!model.containsAttribute("newBrand")) {

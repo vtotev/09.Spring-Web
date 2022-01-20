@@ -17,8 +17,8 @@ public class LensAddBindingModel {
     private String brand;
 
     @NotBlank
-    @Size(min = 3)
-    private String lensName;
+    @Size(min = 3, max = 250)
+    private String modelName;
 
     @NotBlank
     private String cameraBrandCompatibility;
@@ -60,12 +60,12 @@ public class LensAddBindingModel {
         return this;
     }
 
-    public String getLensName() {
-        return lensName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public LensAddBindingModel setLensName(String lensName) {
-        this.lensName = lensName;
+    public LensAddBindingModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

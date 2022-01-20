@@ -22,6 +22,7 @@ import softuni.photostore.service.CameraService;
 import softuni.photostore.service.FlashService;
 import softuni.photostore.service.PictureService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,8 +58,7 @@ public class FlashServiceImpl implements FlashService {
         if (isBrandExisting(brand.getBrandName())) {
             return false;
         }
-        FlashBrand newBrand = new FlashBrand()
-                .setBrandName(brand.getBrandName());
+        FlashBrand newBrand = new FlashBrand(brand.getBrandName());
         brandRepository.save(newBrand);
         return true;
     }
@@ -96,7 +96,7 @@ public class FlashServiceImpl implements FlashService {
     @Override
     public boolean addNewFlash(FlashAddBindingModel flashAdd) {
         PictureEntity picture = null;
-        picture = pictureService.addPicture(flashAdd.getFlashName(), flashAdd.getPictures());
+        picture = pictureService.addPicture(flashAdd.getModelName(), flashAdd.getPictures());
         FlashModel flashModel = modelMapper.map(flashAdd, FlashModel.class);
         flashModel
                 .setBrand(this.getBrandByName(flashAdd.getBrand()))
@@ -107,8 +107,11 @@ public class FlashServiceImpl implements FlashService {
     }
 
     @Override
+    @Transactional
     public void deleteModelById(String id) {
-        flashRepository.deleteById(id);
+        FlashModel toDelete = flashRepository.findById(id).orElse(null);
+        pictureService.deletePicture(toDelete.getPictures());
+        flashRepository.delete(toDelete);
     }
 
     @Override

@@ -19,8 +19,8 @@ public class LensEditBindingModel {
     private String brand;
 
     @NotBlank
-    @Size(min = 3)
-    private String lensName;
+    @Size(min = 3, max = 250)
+    private String modelName;
 
     @NotBlank
     private String cameraBrandCompatibility;
@@ -71,12 +71,12 @@ public class LensEditBindingModel {
         return this;
     }
 
-    public String getLensName() {
-        return lensName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public LensEditBindingModel setLensName(String lensName) {
-        this.lensName = lensName;
+    public LensEditBindingModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

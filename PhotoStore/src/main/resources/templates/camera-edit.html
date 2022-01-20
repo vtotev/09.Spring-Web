@@ -51,13 +51,13 @@
                     <label for="camName" class="font-weight-bold">Модел</label>
                     <input id="camName"
                            name="camName"
-                           th:field="*{cameraName}"
+                           th:field="*{modelName}"
                            th:errorclass="is-invalid"
                            type="text" min="3" class="form-control"
                            placeholder="Модел камера"/>
-                    <p th:if="${#fields.hasErrors('cameraName')}" th:errors="*{cameraName}"
+                    <p th:if="${#fields.hasErrors('modelName')}" th:errors="*{modelName}"
                        class="invalid-feedback errors alert alert-danger">
-                        Модела на фотоапарата е задължителен!
+                        Модела на фотоапарата е задължителен и трябва да е между 3 и 200 символа!
                     </p>
                 </div>
             </div>

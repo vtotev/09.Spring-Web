@@ -55,7 +55,6 @@ public class TripodsController {
 
     @GetMapping("/tripods/manage")
     public String manage(Model model) {
-        // TODO
         model.addAttribute("brands", tripodService.getAllBrands());
         model.addAttribute("tripods", tripodService.getAllTripodsForManagement());
         if (!model.containsAttribute("newBrand")) {

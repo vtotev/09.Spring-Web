@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class FlashManageViewModel {
     private String id;
     private LensBrand brand;
-    private String flashName;
+    private String modelName;
     private BigDecimal price;
     private Integer quantity;
 
@@ -23,12 +23,12 @@ public class FlashManageViewModel {
         return this;
     }
 
-    public String getFlashName() {
-        return flashName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public FlashManageViewModel setFlashName(String flashName) {
-        this.flashName = flashName;
+    public FlashManageViewModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

@@ -19,6 +19,7 @@ import softuni.photostore.service.CameraService;
 import softuni.photostore.service.LensService;
 import softuni.photostore.service.PictureService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,7 @@ public class LensServiceImpl implements LensService {
     @Override
     public boolean addNewLens(LensAddBindingModel lensAdd) {
         PictureEntity picture = null;
-        picture = pictureService.addPicture(lensAdd.getLensName(), lensAdd.getPicture());
+        picture = pictureService.addPicture(lensAdd.getModelName(), lensAdd.getPicture());
         LensModel lensModel = modelMapper.map(lensAdd, LensModel.class);
         lensModel
                 .setBrand(this.getBrandByName(lensAdd.getBrand()))
@@ -86,8 +87,11 @@ public class LensServiceImpl implements LensService {
     }
 
     @Override
+    @Transactional
     public void deleteModelById(String id) {
-        lensRepository.deleteById(id);
+        LensModel toDelete = lensRepository.findById(id).orElse(null);
+        pictureService.deletePicture(toDelete.getPictures());
+        lensRepository.delete(toDelete);
     }
 
     @Override
@@ -135,8 +139,7 @@ public class LensServiceImpl implements LensService {
         if (isBrandExisting(brand.getBrandName())) {
             return false;
         }
-        LensBrand newBrand = new LensBrand()
-                .setBrandName(brand.getBrandName());
+        LensBrand newBrand = new LensBrand(brand.getBrandName());
         brandRepository.save(newBrand);
         return true;
     }

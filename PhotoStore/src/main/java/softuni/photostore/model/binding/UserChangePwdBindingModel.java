@@ -9,15 +9,15 @@ public class UserChangePwdBindingModel {
   private String id;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4)
   private String oldPassword;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4)
   private String password;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4)
   private String confirmPassword;
 
   public String getId() {

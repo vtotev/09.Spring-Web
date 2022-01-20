@@ -93,16 +93,16 @@
 
             <div class="row">
                 <div class="form-group mb-3">
-                    <label for="lensName" class="text-white font-weight-bold">Модел</label>
-                    <input id="lensName"
-                           name="lensName"
-                           th:field="*{lensName}"
+                    <label for="modelName" class="text-white font-weight-bold">Модел</label>
+                    <input id="modelName"
+                           name="modelName"
+                           th:field="*{modelName}"
                            th:errorclass="is-invalid"
                            type="text" min="3" class="form-control"
                            placeholder="Модел на обектива"/>
-                    <p th:if="${#fields.hasErrors('lensName')}"
+                    <p th:if="${#fields.hasErrors('modelName')}"
                        class="invalid-feedback errors alert alert-danger">
-                        Модела на обектива е задължителен!
+                        Модела на обектива е задължителен и трябва да е между 3 и 200 символа
                     </p>
                 </div>
             </div>

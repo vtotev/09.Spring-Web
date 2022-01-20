@@ -9,6 +9,7 @@ import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.bags.BagBrand;
 import softuni.photostore.model.entity.bags.BagModel;
 import softuni.photostore.model.entity.enums.BagTypeEnum;
+import softuni.photostore.model.entity.lenses.LensModel;
 import softuni.photostore.model.service.BagFilterModel;
 import softuni.photostore.model.view.BagManageViewModel;
 import softuni.photostore.model.view.BagViewModel;
@@ -17,6 +18,7 @@ import softuni.photostore.repository.BagRepository;
 import softuni.photostore.service.BagsService;
 import softuni.photostore.service.PictureService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,8 +53,7 @@ public class BagsServiceImpl implements BagsService {
         if (isBrandExisting(brand.getBrandName())) {
             return false;
         }
-        BagBrand newBrand = new BagBrand()
-                .setBrandName(brand.getBrandName());
+        BagBrand newBrand = new BagBrand(brand.getBrandName());
         brandRepository.save(newBrand);
         return true;
     }
@@ -89,8 +90,11 @@ public class BagsServiceImpl implements BagsService {
     }
 
     @Override
+    @Transactional
     public void deleteModelById(String id) {
-        bagsRepository.deleteById(id);
+        BagModel toDelete = bagsRepository.findById(id).orElse(null);
+        pictureService.deletePicture(toDelete.getPictures());
+        bagsRepository.delete(toDelete);
     }
 
     @Override

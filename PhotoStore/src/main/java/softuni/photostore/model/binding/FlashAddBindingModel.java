@@ -16,8 +16,8 @@ public class FlashAddBindingModel {
     private String brand;
 
     @NotBlank
-    @Size(min = 3)
-    private String flashName;
+    @Size(min = 3, max = 250)
+    private String modelName;
 
     @NotBlank
     private String brandCompatibility;
@@ -53,12 +53,12 @@ public class FlashAddBindingModel {
         return this;
     }
 
-    public String getFlashName() {
-        return flashName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public FlashAddBindingModel setFlashName(String flashName) {
-        this.flashName = flashName;
+    public FlashAddBindingModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

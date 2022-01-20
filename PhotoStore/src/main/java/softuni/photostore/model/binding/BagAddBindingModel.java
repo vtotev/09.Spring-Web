@@ -15,7 +15,7 @@ public class BagAddBindingModel {
     private String brand;
 
     @NotBlank
-    @Size(min = 3)
+    @Size(min = 3, max = 250)
     private String modelName;
 
     @NotNull

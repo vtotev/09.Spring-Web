@@ -23,8 +23,8 @@
                         <th scope="col">Собствено име</th>
                         <th scope="col">Фамилно име</th>
                         <th scope="col">Администратор</th>
-                        <th scope="col">Профил</th>
-                        <th scope="col">Парола</th>
+                        <th scope="col"></th>
+                        <!--                        <th scope="col">Парола</th>-->
                     </tr>
                     </thead>
                     <tbody>
@@ -37,13 +37,21 @@
                                    disabled th:checked="*{isAdmin()}">
                         </td>
                         <td>
-                            <a class="btn btn-dark" th:href="@{/manage/users/edit/{id}(id = *{id})}" role="button">Редактирай</a>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                    th:data-bs-target="'#passwordReset_'+ *{id}">
-                                Нулиране
+                            <div class="float-end">
+                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Редактиране на профила">
+                            <a class="btn mybtn" th:href="@{/manage/users/edit/{id}(id = *{id})}" role="button">
+                                <img src="/images/edit.png" width="40"/>
+                            </a>
+                            </span>
+                                <!--                        </td>-->
+                                <!--                        <td>-->
+                                <span data-bs-toggle="tooltip" data-bs-placement="top" title="Нулиране на паролата">
+                                <button type="button" class="btn mybtn" data-bs-toggle="modal"
+                                        th:data-bs-target="'#passwordReset_'+ *{id}">
+                                <img src="/images/pass-reset.png" width="40"/>
                             </button>
+                            </span>
+                            </div>
 
                             <!-- Modal -->
                             <div class="modal fade" th:id="'passwordReset_'+ *{id}" tabindex="-1"

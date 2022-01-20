@@ -8,7 +8,7 @@ public class TripodManageViewModel {
 
     private String id;
     private String brand;
-    private String tripodName;
+    private String modelName;
     private BigDecimal price;
     private Integer quantity;
 
@@ -33,12 +33,12 @@ public class TripodManageViewModel {
         return this;
     }
 
-    public String getTripodName() {
-        return tripodName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public TripodManageViewModel setTripodName(String tripodName) {
-        this.tripodName = tripodName;
+    public TripodManageViewModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

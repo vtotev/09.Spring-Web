@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class LensViewModel {
     private String id;
-    private String lensName;
+    private String modelName;
     private BigDecimal price;
     private Integer quantity;
     private String description;
@@ -21,12 +21,12 @@ public class LensViewModel {
         return this;
     }
 
-    public String getLensName() {
-        return lensName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public LensViewModel setLensName(String lensName) {
-        this.lensName = lensName;
+    public LensViewModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

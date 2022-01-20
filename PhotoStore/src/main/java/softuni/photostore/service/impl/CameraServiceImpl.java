@@ -44,7 +44,7 @@ public class CameraServiceImpl implements CameraService {
     @Override
     public boolean addNewCamera(CameraAddBindingModel cameraAddBindingModel) {
         PictureEntity picture = null;
-        picture = pictureService.addPicture(cameraAddBindingModel.getCameraName(), cameraAddBindingModel.getPicture());
+        picture = pictureService.addPicture(cameraAddBindingModel.getModelName(), cameraAddBindingModel.getPicture());
         CameraModel camera = modelMapper.map(cameraAddBindingModel, CameraModel.class);
         camera.setBrand(this.getBrandByName(cameraAddBindingModel.getBrand()))
                 .setPictures(picture);
@@ -84,6 +84,7 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
+    @Transactional
     public void deleteModelById(String id) {
         CameraModel toDelete = cameraRepository.findById(id).orElse(null);
         pictureService.deletePicture(toDelete.getPictures());
@@ -128,8 +129,7 @@ public class CameraServiceImpl implements CameraService {
         if (isBrandExisting(brand.getBrandName())) {
             return false;
         }
-        CameraBrand newBrand = new CameraBrand()
-                .setBrandName(brand.getBrandName());
+        CameraBrand newBrand = new CameraBrand(brand.getBrandName());
         brandRepository.save(newBrand);
         return true;
     }

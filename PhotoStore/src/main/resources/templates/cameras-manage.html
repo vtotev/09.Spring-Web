@@ -14,7 +14,7 @@
             </h1>
         </div>
         <div class="form-group row">
-            <div class="form-group col-3">
+            <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                 <div class="container bg-gradient rounded p-3 mt-2">
                     <div class="row pb-1">
                         <div class="col">
@@ -39,7 +39,7 @@
                                         </div>
                                         <form th:action="@{/cameras/manage/brand/add}"
                                               th:method="POST">
-                                            <div class="modal-body">
+                                            <div class="modal-body text-wrap">
                                                 <label for="brand-name" class="form-label">Име на производител</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" id="brand-name"
@@ -80,9 +80,9 @@
                             <th scope="row" th:text="*{brandName}"></th>
                             <td>
                                 <div class="float-end">
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    <button type="button" class="btn mybtn" data-bs-toggle="modal"
                                             th:data-bs-target="'#deleteBrand_'+ *{id}">
-                                        Изтрий
+                                        <img src="/images/delete.png" width="40"/>
                                     </button>
 
                                     <!-- Delete Brand Modal -->
@@ -96,7 +96,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body"
+                                                <div class="modal-body text-wrap"
                                                      th:text="'Производител ' + *{brandName} + ' ще бъде изтрит. Сигурни ли сте, че искате да продължите?'">
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
@@ -152,7 +152,7 @@
                         <tbody>
                         <tr th:each="c : ${cameras}" th:object="${c}">
                             <th scope="row" th:text="*{brand.brandName}">brand</th>
-                            <td th:text="*{cameraName}">model</td>
+                            <td th:text="*{modelName}">model</td>
                             <td th:text="*{quantity}">quantity</td>
                             <td th:text="*{price}">price</td>
                             <td>
@@ -177,8 +177,8 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body"
-                                                     th:text="'Фотоапаратът ' + *{cameraName} + ' ще бъде изтрит. Сигурни ли сте, че искате да продължите?'">
+                                                <div class="modal-body text-wrap"
+                                                     th:text="'Фотоапаратът ' + *{modelName} + ' ще бъде изтрит. Сигурни ли сте, че искате да продължите?'">
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
                                                     <form th:object="${c}"
@@ -217,7 +217,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
-                            <div class="modal-body"
+                            <div class="modal-body text-wrap"
                                  th:text="'Производител с посоченото име вече съществува!'">
                                 Производителят вече съществува!
                             </div>
@@ -249,7 +249,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body text-wrap">
                                 Името на производителя трябва да е поне 3 символа!
                             </div>
                             <div class="modal-footer justify-content-center">
@@ -280,7 +280,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body text-wrap">
                                 Производителят беше добавен успешно!
                             </div>
                             <div class="modal-footer justify-content-center">

@@ -65,7 +65,7 @@
 
                                 <a class="dropdown-item"
                                    th:href="@{/lenses/{type}(type=*{l.getHref()})}">
-                                <img th:src="*{'/images/lenses/' + l.name() + '.png'}" width="64"
+                                    <img th:src="*{'/images/lenses/' + l.name() + '.png'}" width="64"
                                          th:text="*{' ' + l.getTitle()}"></a>
                             </li>
 
@@ -145,7 +145,6 @@
                                 <a class="dropdown-item"
                                    th:href="@{/tripods}">
                                     <img src="/images/tripod.png" width="64" th:text="'Всички стативи'">
-<!--                                    <img src="/images/tripod.png" width="64" th:text=" Всички стативи">-->
                                 </a>
                             </li>
                             <li sec:authorize="hasRole('ADMIN')">
@@ -183,13 +182,16 @@
                     </div>
 
                     <div sec:authorize="isAuthenticated()">
-                        <div sec:authorize="!hasRole('ADMIN')">
+<!--                        <div sec:authorize="!hasRole('ADMIN')">-->
                             <a class="dropdown-item" th:href="@{/manage/user/edit}">Промяна на данни</a>
                             <a class="dropdown-item" th:href="@{/manage/user/changepassword}">Смяна на парола</a>
-                        </div>
+<!--                        </div>-->
 
                         <form th:action="@{/users/logout}" th:method="post">
-                            <input class="dropdown-item" type="submit" value="Изход">
+<!--                            <input class="dropdown-item" type="submit" value="Изход">-->
+                            <button type="submit" class="dropdown-item btn-dark logoutBtn">
+                                <img src="/images/logout.png" height="24" th:text="Изход">
+                            </button>
                         </form>
                     </div>
 
@@ -225,6 +227,57 @@
                     </script>
                 </div>
             </div>
+
+
+            <!--            Shopping cart-->
+            <div class="dropdown" id="cart">
+                <button class="btn btn-dark justify-content-end" type="button" id="CartMenu"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/images/shopping_cart.png" height="28">
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-end" style="background-color: rgba(206,206,206,0.9)">
+                    <ul class="list-group bg-transparent px-2 pe-2" style="list-style: none">
+                        <div th:unless="${cartItems.size()>0}" class="list-group-item border-0 bg-transparent">
+                            <div class="text-center">
+                                <img src="/images/cart-empty.png" width="80">
+                                <li class="dropdown-item text-black cartItem pt-2">Кошницата е празна</li>
+                            </div>
+                        </div>
+
+                        <div th:if="${cartItems.size()>0}">
+
+                            <li th:each="e : ${cartItems}" th:object="${e}" class="bg-transparent border-0 cartItem">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <a class="dropdown-item text-wrap text-black align-self-center"
+                                           style="min-width: 250px; max-width: 350px">
+                                            <img th:src="*{pictureUrl}" height="48" th:text="*{productName}"
+                                                 style="float: left">
+                                        </a>
+                                    </div>
+                                    <div class="col-2 align-self-center">
+                                        <form th:method="post" th:action="@{/cart/remove/{id}(id=*{id})}">
+                                            <button type="submit" class="btn mybtn" style="width: 24px; height: 24px">
+                                                <img src="/images/remove-item.png" width="24" href="/" class="pb-4">
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <div class="dropdown-divider"></div>
+                            <li class="cartAll">
+                                <a class="dropdown-item text-black"
+                                   th:href="@{/shopping/cart}">
+                                    <img src="/images/shopping_cart.png" width="32" th:text=" 'Към кошницата'">
+                                </a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </nav>
 </header>

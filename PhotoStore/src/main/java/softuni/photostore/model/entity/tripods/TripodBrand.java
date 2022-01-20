@@ -1,16 +1,13 @@
 package softuni.photostore.model.entity.tripods;
 
-import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.BaseBrand;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "tripod_brands")
-public class TripodBrand extends BaseEntity {
-
-    @Column(name = "brand_name", nullable = false, unique = true)
-    private String brandName;
+public class TripodBrand extends BaseBrand {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
     private List<TripodModel> tripods;
@@ -18,13 +15,8 @@ public class TripodBrand extends BaseEntity {
     public TripodBrand() {
     }
 
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public TripodBrand setBrandName(String brandName) {
-        this.brandName = brandName;
-        return this;
+    public TripodBrand(String brandName) {
+        this.setBrandName(brandName);
     }
 
     public List<TripodModel> getTripods() {

@@ -12,23 +12,23 @@ import javax.validation.constraints.Size;
 public class UserRegistrationBindingModel {
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String firstName;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String lastName;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String password;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String confirmPassword;
 
   @NotBlank(message = "Потребителското име е задължително")
-  @Size(min=4, max=20, message = "Потребителското име трябва да е между 4 и 20 символа")
+  @Size(min=4, max=20, message = "Потребителското име трябва да е между 4 и 30 символа")
   @UniqueUserName
   private String username;
 

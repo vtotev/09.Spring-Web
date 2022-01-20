@@ -1,6 +1,7 @@
 package softuni.photostore.model.entity.lenses;
 
 import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.BaseModel;
 import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
@@ -12,13 +13,10 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "lens_models")
-public class LensModel extends BaseEntity {
+public class LensModel extends BaseModel {
 
     @ManyToOne
     private LensBrand brand;
-
-    @Column(name = "lens_name", nullable = false)
-    private String lensName;
 
     @ManyToOne
     private CameraBrand cameraBrandCompatibility;
@@ -38,18 +36,6 @@ public class LensModel extends BaseEntity {
     @Column(nullable = false)
     private Double fastestAperture;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
-    @Column(nullable = false)
-    private Integer quantity;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private PictureEntity pictures;
-
     public LensModel() {
     }
 
@@ -59,15 +45,6 @@ public class LensModel extends BaseEntity {
 
     public LensModel setBrand(LensBrand brand) {
         this.brand = brand;
-        return this;
-    }
-
-    public String getLensName() {
-        return lensName;
-    }
-
-    public LensModel setLensName(String lensName) {
-        this.lensName = lensName;
         return this;
     }
 
@@ -116,39 +93,4 @@ public class LensModel extends BaseEntity {
         return this;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public LensModel setPrice(BigDecimal price) {
-        this.price = price;
-        return this;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public LensModel setQuantity(Integer quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public LensModel setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public PictureEntity getPictures() {
-        return pictures;
-    }
-
-    public LensModel setPictures(PictureEntity pictures) {
-        this.pictures = pictures;
-        return this;
-    }
 }

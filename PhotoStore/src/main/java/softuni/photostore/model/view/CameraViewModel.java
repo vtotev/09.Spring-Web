@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 public class CameraViewModel extends BaseEntity {
     private String id;
-    private String cameraName;
+    private String modelName;
     private BigDecimal price;
     private Integer quantity;
     private String description;
@@ -31,12 +31,12 @@ public class CameraViewModel extends BaseEntity {
         return this;
     }
 
-    public String getCameraName() {
-        return cameraName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public CameraViewModel setCameraName(String cameraName) {
-        this.cameraName = cameraName;
+    public CameraViewModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

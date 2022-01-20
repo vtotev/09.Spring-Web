@@ -1,5 +1,6 @@
 package softuni.photostore.model.entity.flashes;
 
+import softuni.photostore.model.entity.BaseBrand;
 import softuni.photostore.model.entity.BaseEntity;
 
 import javax.persistence.*;
@@ -7,10 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "flash_brands")
-public class FlashBrand extends BaseEntity {
-
-    @Column(name = "brand_name", nullable = false, unique = true)
-    private String brandName;
+public class FlashBrand extends BaseBrand {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
     private List<FlashModel> flashes;
@@ -18,13 +16,8 @@ public class FlashBrand extends BaseEntity {
     public FlashBrand() {
     }
 
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public FlashBrand setBrandName(String brandName) {
-        this.brandName = brandName;
-        return this;
+    public FlashBrand(String brandName) {
+        this.setBrandName(brandName);
     }
 
     public List<FlashModel> getFlashes() {

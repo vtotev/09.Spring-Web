@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 public class FlashViewModel {
     private String id;
     private LensBrand brand;
-    private String flashName;
+    private String modelName;
     private BigDecimal price;
     private Integer quantity;
     private String description;
@@ -31,12 +31,12 @@ public class FlashViewModel {
         return this;
     }
 
-    public String getFlashName() {
-        return flashName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public FlashViewModel setFlashName(String flashName) {
-        this.flashName = flashName;
+    public FlashViewModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

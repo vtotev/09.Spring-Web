@@ -7,8 +7,8 @@
 <header th:replace="fragments/common::navigation"></header>
 
 <div class="container">
-    <div class="jumbotron">
-        <h2 class="text-center text-white">Промяна данните на потребител</h2>
+    <div class="jumbotron text-black">
+        <h2 class="text-center pb-3">Промяна данните на потребител</h2>
         <form
                 th:action="@{/manage/user/edit}"
                 th:method="POST"
@@ -17,7 +17,7 @@
 
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="username" class="text-white font-weight-bold">Потребителско име</label>
+                    <label for="username" class="font-weight-bold">Потребителско име</label>
                     <input id="username"
                            name="username"
                            th:field="*{username}"
@@ -31,7 +31,7 @@
                     </p>
                 </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="email" class="text-white font-weight-bold">Email</label>
+                    <label for="email" class="font-weight-bold">Email</label>
                     <input id="email"
                            name="email"
                            th:field="*{email}"
@@ -46,7 +46,7 @@
 
             <div class="row">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="firstName" class="text-white font-weight-bold">Собствено име</label>
+                    <label for="firstName" class="font-weight-bold">Собствено име</label>
                     <input
                             id="firstName"
                             th:field="*{firstName}"
@@ -59,7 +59,7 @@
                     </p>
                 </div>
                 <div class="form-group col-md-6 mb-3">
-                    <label for="lastName" class="text-white font-weight-bold">Фамилно име</label>
+                    <label for="lastName" class="font-weight-bold">Фамилно име</label>
                     <input id="lastName"
                            name="lastName"
                            th:field="*{lastName}"
@@ -74,7 +74,7 @@
 
             <div class="row justify-content-center">
                 <div class="form-group col-md-6 mb-3">
-                    <label for="Password" class="text-white font-weight-bold">Парола (изисква се за потвърждение на
+                    <label for="Password" class="font-weight-bold">Парола (изисква се за потвърждение на
                         самоличността)</label>
                     <input id="Password"
                            name="Password"

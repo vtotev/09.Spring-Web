@@ -35,16 +35,16 @@
                 </div>
 
                 <div class="form-group col-md-6 mb-3">
-                    <label for="tripodName" class="text-white font-weight-bold">Модел</label>
-                    <input id="tripodName"
-                           name="tripodName"
-                           th:field="*{tripodName}"
+                    <label for="modelName" class="text-white font-weight-bold">Модел</label>
+                    <input id="modelName"
+                           name="modelName"
+                           th:field="*{modelName}"
                            th:errorclass="is-invalid"
                            type="text" min="3" class="form-control"
                            placeholder="Модел"/>
-                    <p th:if="${#fields.hasErrors('tripodName')}"
+                    <p th:if="${#fields.hasErrors('modelName')}"
                        class="invalid-feedback errors alert alert-danger">
-                        Име на модела на чанта/раница е задължителен!
+                        Модел на статива е задължителен и трябва да е между 3 и 200 символа!
                     </p>
                 </div>
             </div>

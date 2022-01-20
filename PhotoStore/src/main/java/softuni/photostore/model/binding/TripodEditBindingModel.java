@@ -17,8 +17,8 @@ public class TripodEditBindingModel {
     private String brand;
 
     @NotBlank
-    @Size(min = 3)
-    private String tripodName;
+    @Size(min = 3, max = 250)
+    private String modelName;
 
     @NotNull
     @Min(value = 0)
@@ -55,12 +55,12 @@ public class TripodEditBindingModel {
         return this;
     }
 
-    public String getTripodName() {
-        return tripodName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public TripodEditBindingModel setTripodName(String tripodName) {
-        this.tripodName = tripodName;
+    public TripodEditBindingModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

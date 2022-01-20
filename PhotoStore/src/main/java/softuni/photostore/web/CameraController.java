@@ -1,6 +1,14 @@
 package softuni.photostore.web;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,10 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import softuni.photostore.model.binding.CameraAddBindingModel;
 import softuni.photostore.model.binding.CameraBrandAddBindingModel;
+import softuni.photostore.model.entity.BaseModel;
+import softuni.photostore.model.entity.accounts.User;
 import softuni.photostore.model.entity.cameras.CameraModel;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
 import softuni.photostore.model.service.CameraFilterModel;
 import softuni.photostore.service.CameraService;
+import softuni.photostore.service.CartService;
+import softuni.photostore.service.UsersService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,10 +32,15 @@ import java.util.List;
 public class CameraController {
     private final CameraService cameraService;
     private final ModelMapper modelMapper;
+    private final UsersService usersService;
+    private final CartService cartService;
+    private static final Logger logger = LoggerFactory.getLogger(CameraController.class);
 
-    public CameraController(CameraService cameraService, ModelMapper modelMapper) {
+    public CameraController(CameraService cameraService, ModelMapper modelMapper, UsersService usersService, CartService cartService) {
         this.cameraService = cameraService;
         this.modelMapper = modelMapper;
+        this.usersService = usersService;
+        this.cartService = cartService;
     }
 
     @GetMapping("/cameras/{type}")
@@ -168,6 +185,26 @@ public class CameraController {
     @GetMapping("/cameras/details/{id}")
     public String showCameraDetails(@PathVariable String id, Model model) {
         model.addAttribute("camera", cameraService.getCameraDetailsById(id));
+//        model.addAttribute("remoteip", ((WebAuthenticationDetails) context.getAuthentication().getDetails()).getRemoteAddress());
         return "camera-details";
+    }
+
+    @PostMapping("/cameras/details/{id}")
+    public String addToCart(@PathVariable String id, @CurrentSecurityContext SecurityContext context) {
+        cartService.addItemToCart(cameraService.getCameraById(id), context, CameraModel.class);
+//        User user = null;
+//        String remoteIP = "";
+//        var product = cameraService.getCameraById(id);
+//        Authentication authentication = context.getAuthentication();
+//        AuthenticationTrustResolver authenticationTrustResolver = new AuthenticationTrustResolverImpl();
+//        if (!authenticationTrustResolver.isAnonymous(authentication)) {
+//            user = usersService.getUserByUsername(authentication.getName());
+//        }
+//        if (context.getAuthentication().getDetails() instanceof WebAuthenticationDetails) {
+//            WebAuthenticationDetails authDetails = (WebAuthenticationDetails) context.getAuthentication().getDetails();
+//            remoteIP = authDetails.getRemoteAddress();
+//        }
+//        cartService.addItemToCart(user != null ? user.getId() : context.getAuthentication().getName(), remoteIP, product, 1, product.getClass().getSimpleName());
+        return "redirect:/cameras/details/" + id;
     }
 }

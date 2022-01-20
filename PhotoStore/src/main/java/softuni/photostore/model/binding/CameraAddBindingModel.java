@@ -18,8 +18,8 @@ public class CameraAddBindingModel extends BaseEntity {
     private String brand;
 
     @NotBlank
-    @Size(min = 3)
-    private String cameraName;
+    @Size(min = 3, max = 250)
+    private String modelName;
 
     @NotNull
     private CameraTypeEnum cameraType;
@@ -54,12 +54,12 @@ public class CameraAddBindingModel extends BaseEntity {
         return this;
     }
 
-    public String getCameraName() {
-        return cameraName;
+    public String getModelName() {
+        return modelName;
     }
 
-    public CameraAddBindingModel setCameraName(String cameraName) {
-        this.cameraName = cameraName;
+    public CameraAddBindingModel setModelName(String modelName) {
+        this.modelName = modelName;
         return this;
     }
 

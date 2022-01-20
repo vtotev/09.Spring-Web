@@ -1,6 +1,7 @@
 package softuni.photostore.model.entity.cameras;
 
 import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.BaseModel;
 import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
 import softuni.photostore.model.entity.enums.CameraTypeEnum;
@@ -12,13 +13,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "camera_models")
-public class CameraModel extends BaseEntity {
+public class CameraModel extends BaseModel {
 
     @ManyToOne
     private CameraBrand brand;
-
-    @Column(name = "camera_name", nullable = false)
-    private String cameraName;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -31,18 +29,6 @@ public class CameraModel extends BaseEntity {
     @Column(nullable = false)
     private Double megapixels;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
-    @Column(nullable = false)
-    private Integer quantity;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private PictureEntity pictures;
-
     public CameraModel() {
     }
 
@@ -52,15 +38,6 @@ public class CameraModel extends BaseEntity {
 
     public CameraModel setBrand(CameraBrand brand) {
         this.brand = brand;
-        return this;
-    }
-
-    public String getCameraName() {
-        return cameraName;
-    }
-
-    public CameraModel setCameraName(String cameraName) {
-        this.cameraName = cameraName;
         return this;
     }
 
@@ -91,39 +68,4 @@ public class CameraModel extends BaseEntity {
         return this;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public CameraModel setPrice(BigDecimal price) {
-        this.price = price;
-        return this;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public CameraModel setQuantity(Integer quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public CameraModel setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public PictureEntity getPictures() {
-        return pictures;
-    }
-
-    public CameraModel setPictures(PictureEntity pictures) {
-        this.pictures = pictures;
-        return this;
-    }
 }

@@ -68,7 +68,7 @@ footer {
     color: #9b9d9e;
 }
 
-.dropdown:not(#login):hover .dropdown-menu:not(#login) {
+.dropdown:not(#login):hover .dropdown-menu:not(#login) .dropdown:not(#cart):hover .dropdown-menu:not(#cart)  {
     display: block;
     margin-top: 0;
 }
@@ -105,3 +105,22 @@ textbox {
     margin-left: -10px;
     margin-top: -4px;
 }
+
+.cartItem a:hover, .cartItem:hover{
+    /*background-color: silver;*/
+    background-color: transparent;
+}
+
+
+.cartAll a:hover, .cartAll:hover {
+    /*background-color: #1c1f23;*/
+    /*background-color: #464b51;*/
+    background-color: #afafaf;
+    color: white;
+}
+
+.logoutBtn a:hover, .logoutBtn:hover, .logoutBtn:before{
+    background-color: #464b51;
+    color: white;
+}
+

@@ -13,15 +13,15 @@ public class UserEditBindingModel {
   private String username;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String firstName;
 
   @NotNull
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String lastName;
 
   @NotBlank
-  @Size(min=4, max=20)
+  @Size(min=4, max=30)
   private String password;
 
   @NotBlank

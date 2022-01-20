@@ -1,6 +1,7 @@
 package softuni.photostore.model.entity.flashes;
 
 import softuni.photostore.model.entity.BaseEntity;
+import softuni.photostore.model.entity.BaseModel;
 import softuni.photostore.model.entity.PictureEntity;
 import softuni.photostore.model.entity.cameras.CameraBrand;
 import softuni.photostore.model.entity.enums.CameraSensorSizeEnum;
@@ -14,13 +15,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "flash_models")
-public class FlashModel extends BaseEntity {
+public class FlashModel extends BaseModel {
 
     @ManyToOne
     private FlashBrand brand;
-
-    @Column(name = "flash_name", nullable = false)
-    private String flashName;
 
     @ManyToOne
     private CameraBrand brandCompatibility;
@@ -29,20 +27,8 @@ public class FlashModel extends BaseEntity {
     @Column(nullable = false)
     private FlashModesEnum flashType;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
-    @Column(nullable = false)
-    private Integer quantity;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
     @Column(nullable = false)
     private Boolean isHSS;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private PictureEntity pictures;
 
     public FlashModel() {
     }
@@ -53,15 +39,6 @@ public class FlashModel extends BaseEntity {
 
     public FlashModel setBrand(FlashBrand brand) {
         this.brand = brand;
-        return this;
-    }
-
-    public String getFlashName() {
-        return flashName;
-    }
-
-    public FlashModel setFlashName(String flashName) {
-        this.flashName = flashName;
         return this;
     }
 
@@ -83,33 +60,6 @@ public class FlashModel extends BaseEntity {
         return this;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public FlashModel setPrice(BigDecimal price) {
-        this.price = price;
-        return this;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public FlashModel setQuantity(Integer quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public FlashModel setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
     public Boolean getHSS() {
         return isHSS;
     }
@@ -119,12 +69,4 @@ public class FlashModel extends BaseEntity {
         return this;
     }
 
-    public PictureEntity getPictures() {
-        return pictures;
-    }
-
-    public FlashModel setPictures(PictureEntity pictures) {
-        this.pictures = pictures;
-        return this;
-    }
 }
